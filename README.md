@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Warikoo Finance Calculator
 
-## Getting Started
+Honest financial advice based on Ankur Warikoo's framework. No fluff. No selling.
+Just math + Warikoo's principles applied to YOUR numbers.
 
-First, run the development server:
+All calculations run client-side. Your data never leaves your browser.
+
+## Features
+
+- **Warikoo Health Score** — single 0-100 score across 4 pillars
+- **Cash Flow** — 50/30/20 breakdown, savings rate, EMI ratio
+- **Loan Prepayment Strategy** — debt avalanche, prepay vs invest math
+- **Goal Tracker** — inflated goal cost, required SIP, on-track / shortfall
+- **SIP Projections** — year-by-year wealth curve with step-ups
+- **Red Flags** — under-insured, over-leveraged, missing emergency fund
+- **PDF Export** — full report via jsPDF + html2canvas
+
+## Tech stack
+
+- Next.js 16 (App Router) + Turbopack
+- React 19
+- TypeScript 5
+- Tailwind CSS v4
+- shadcn/ui (Radix primitives)
+- Zustand (with localStorage persistence)
+- React Hook Form + Zod
+- Recharts
+- lucide-react
+- jsPDF + html2canvas
+
+## Setup
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+App runs at <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+Push to GitHub, then deploy on [Vercel](https://vercel.com/new). Zero config —
+Next.js projects deploy out of the box.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  layout.tsx          root layout, fonts, metadata
+  page.tsx            landing page (hero, features, CTA)
+  calculator/         multi-section input form
+  results/            results dashboard
+  globals.css         Tailwind v4 + theme tokens
+components/
+  ui/                 shadcn primitives
+  form/               per-section form components (TODO)
+  results/            per-section results cards (TODO)
+  shared/             reusable bits (CurrencyInput, etc.)
+lib/
+  types.ts            all TypeScript interfaces
+  store.ts            Zustand store with localStorage persistence
+  calculations.ts     core math (TODO — implemented by ai-engineer)
+  utils.ts            shadcn `cn` helper
+```
 
-## Deploy on Vercel
+## Status
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Scaffolded by **rapid-prototyper**. Form fields and calculation logic are
+placeholders — see `components/form/README.md`, `components/results/README.md`,
+and `lib/calculations.ts` for what's left to build.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Not affiliated with Ankur Warikoo. Educational tool, not financial advice.
