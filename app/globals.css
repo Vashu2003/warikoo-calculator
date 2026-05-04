@@ -8,8 +8,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+  --font-heading: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -91,72 +92,74 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Editorial fintech palette: ink on cream, clay accent, no purple, no AI-safe blue. */
+  --background: #FAFAF7;       /* warm cream paper */
+  --foreground: #0E0E0C;       /* near-black ink */
+  --card: #FFFFFE;
+  --card-foreground: #0E0E0C;
+  --popover: #FFFFFE;
+  --popover-foreground: #0E0E0C;
+  --primary: #0E0E0C;
+  --primary-foreground: #FAFAF7;
+  --secondary: #F0EDE5;        /* parchment shade */
+  --secondary-foreground: #0E0E0C;
+  --muted: #F0EDE5;
+  --muted-foreground: #6E6A60; /* warm grey for body */
+  --accent: #C84B31;           /* terracotta clay — the ONE accent */
+  --accent-foreground: #FAFAF7;
+  --destructive: #B33A1F;
+  --border: #1A1A18;           /* hard sharp borders, not soft greys */
+  --input: #DDD8CB;
+  --ring: #C84B31;
+  --chart-1: #C84B31;
+  --chart-2: #2A6F4F;
+  --chart-3: #8B4513;
+  --chart-4: #1A3A52;
+  --chart-5: #6B5B73;
+  --radius: 0.125rem;          /* sharp — kills the rounded-everything slop tell */
+  --sidebar: #F0EDE5;
+  --sidebar-foreground: #0E0E0C;
+  --sidebar-primary: #C84B31;
+  --sidebar-primary-foreground: #FAFAF7;
+  --sidebar-accent: #DDD8CB;
+  --sidebar-accent-foreground: #0E0E0C;
+  --sidebar-border: #1A1A18;
+  --sidebar-ring: #C84B31;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Dark editorial — espresso paper, not pure black. */
+  --background: #14130F;
+  --foreground: #F5F2E8;
+  --card: #1B1A14;
+  --card-foreground: #F5F2E8;
+  --popover: #1B1A14;
+  --popover-foreground: #F5F2E8;
+  --primary: #F5F2E8;
+  --primary-foreground: #14130F;
+  --secondary: #25231C;
+  --secondary-foreground: #F5F2E8;
+  --muted: #25231C;
+  --muted-foreground: #9C9684;
+  --accent: #E26340;          /* slightly lifted clay for contrast */
+  --accent-foreground: #14130F;
+  --destructive: #E26340;
+  --border: #3A382E;
+  --input: #2A2820;
+  --ring: #E26340;
+  --chart-1: #E26340;
+  --chart-2: #4A9472;
+  --chart-3: #C49560;
+  --chart-4: #5D8AA8;
+  --chart-5: #9B8AA8;
+  --sidebar: #1B1A14;
+  --sidebar-foreground: #F5F2E8;
+  --sidebar-primary: #E26340;
+  --sidebar-primary-foreground: #14130F;
+  --sidebar-accent: #25231C;
+  --sidebar-accent-foreground: #F5F2E8;
+  --sidebar-border: #3A382E;
+  --sidebar-ring: #E26340;
   /* Dark mode brand overrides */
   --color-warikoo-blue-50: #102A43;
   --color-warikoo-accent-soft: #3F2E00;
@@ -199,8 +202,20 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11";
   }
   html {
     @apply font-sans;
+  }
+  /* Editorial display type — Fraunces with optical sizing for headlines. */
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display), Georgia, serif;
+    font-feature-settings: "ss01", "ss02";
+    letter-spacing: -0.02em;
+  }
+  /* Tabular nums everywhere money/percent shows up. */
+  .tabular-nums, [class*="tabular"] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum", "lnum";
   }
 }

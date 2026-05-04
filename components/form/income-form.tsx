@@ -12,12 +12,18 @@ export function IncomeForm() {
 
   return (
     <div>
-      <p className="mb-4 text-sm text-muted-foreground">
-        Net monthly take-home — what hits your bank account, not CTC.
+      <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        Enter <span className="font-semibold text-foreground">net monthly</span>{" "}
+        take-home — the actual rupees that hit your account on payday. Not CTC, not gross.
       </p>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <Field label="Salary (in-hand monthly)">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <Field
+          label="Salary (in-hand monthly)"
+          hint="After income tax + PF + professional tax deducted."
+          doubt="Look at your last salary slip. Find the ‘Net Salary’ or ‘Take Home’ row. NOT the CTC, NOT the gross."
+          example="₹65,000 if that's what credits to bank monthly"
+        >
           <CurrencyInput
             value={income.salary}
             onChange={(v) => update({ salary: v })}
@@ -25,7 +31,12 @@ export function IncomeForm() {
           />
         </Field>
 
-        <Field label="Side income / freelance" hint="Average per month">
+        <Field
+          label="Side income / freelance"
+          hint="Monthly average over last 6 months."
+          doubt="Include: consulting, freelance projects, YouTube/Insta payouts, weekend gigs. Skip if it's truly one-off."
+          example="₹15,000 if you average that across the year"
+        >
           <CurrencyInput
             value={income.sideIncome}
             onChange={(v) => update({ sideIncome: v })}
@@ -34,8 +45,10 @@ export function IncomeForm() {
         </Field>
 
         <Field
-          label="Other income"
-          hint="Rent, dividends, interest etc."
+          label="Other recurring income"
+          hint="Passive or recurring sources you can rely on."
+          doubt="Rent received, dividends, FD interest (monthly equivalent), spousal contribution to YOUR budget. Skip lottery/gifts/one-time."
+          example="₹8,000 if you rent out a portion of your home"
           className="md:col-span-2"
         >
           <CurrencyInput

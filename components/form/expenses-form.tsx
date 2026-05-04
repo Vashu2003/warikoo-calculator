@@ -6,21 +6,95 @@ import { Field, TotalRow } from "@/components/shared/field";
 import { Separator } from "@/components/ui/separator";
 import type { Expenses } from "@/lib/types";
 
-const ESSENTIALS: Array<{ key: keyof Expenses; label: string }> = [
-  { key: "rent", label: "Rent / EMI on home" },
-  { key: "groceries", label: "Groceries" },
-  { key: "utilities", label: "Utilities (power, water, gas)" },
-  { key: "mobile", label: "Mobile / internet" },
-  { key: "transport", label: "Transport / fuel" },
-  { key: "healthcare", label: "Healthcare (out-of-pocket)" },
+interface ExpenseFieldDef {
+  key: keyof Expenses;
+  label: string;
+  hint: string;
+  doubt: string;
+  example?: string;
+}
+
+const ESSENTIALS: ExpenseFieldDef[] = [
+  {
+    key: "rent",
+    label: "Rent",
+    hint: "Monthly rent + maintenance + parking + brokerage averaged.",
+    doubt: "If you OWN the home, leave this 0 — your home loan EMI goes in the Loans tab. Don't double-count.",
+    example: "₹18,000 (rent ₹16k + maintenance ₹2k)",
+  },
+  {
+    key: "groceries",
+    label: "Groceries & household",
+    hint: "Food, cleaning supplies, daily essentials.",
+    doubt: "Includes: BigBasket, Zepto, kirana store, monthly Amazon for daily-use stuff. Excludes: eating out.",
+    example: "₹8,000 for a couple",
+  },
+  {
+    key: "utilities",
+    label: "Utilities & home services",
+    hint: "Electricity + water + gas + maid + cook.",
+    doubt: "Society maintenance goes in Rent. NOT mobile/internet (separate line).",
+    example: "₹3,500 (power ₹2k + maid ₹1k + gas ₹500)",
+  },
+  {
+    key: "mobile",
+    label: "Mobile & internet",
+    hint: "Postpaid + home wifi + OTT bundle prepaid recharges.",
+    doubt: "Subscriptions like Netflix go in 'Subscriptions' below. Just connectivity here.",
+    example: "₹1,200 (Jio postpaid ₹400 + ACT wifi ₹800)",
+  },
+  {
+    key: "transport",
+    label: "Transport / commute",
+    hint: "Petrol + Uber/Ola + metro + monthly passes averaged.",
+    doubt: "Vacation flights/trains go in Other. Daily/weekly commute only here.",
+    example: "₹4,000 (petrol ₹3k + Uber ₹1k)",
+  },
+  {
+    key: "healthcare",
+    label: "Healthcare (out-of-pocket)",
+    hint: "Doctor visits + medicines + dental + optical.",
+    doubt: "NOT health insurance premium — that's in the Insurance tab. Just direct medical spend you pay.",
+    example: "₹1,500 monthly average",
+  },
 ];
 
-const LIFESTYLE: Array<{ key: keyof Expenses; label: string }> = [
-  { key: "eatingOut", label: "Eating out / Swiggy / Zomato" },
-  { key: "subscriptions", label: "Subscriptions (OTT, gym, apps)" },
-  { key: "education", label: "Courses / education" },
-  { key: "familySupport", label: "Family support / sent home" },
-  { key: "other", label: "Other / discretionary" },
+const LIFESTYLE: ExpenseFieldDef[] = [
+  {
+    key: "eatingOut",
+    label: "Eating out & food delivery",
+    hint: "Restaurants + Swiggy + Zomato + Starbucks + bar bills.",
+    doubt: "This is THE leak everyone underestimates. Open your last 3 months of UPI history if unsure.",
+    example: "₹5,000 if you order in 2x/week + restaurant 2x/month",
+  },
+  {
+    key: "subscriptions",
+    label: "Subscriptions",
+    hint: "Netflix + Spotify + Notion + ChatGPT + iCloud + gym + apps.",
+    doubt: "Add ALL of them. The £/$ ones convert at current rate. Annual subs ÷ 12.",
+    example: "₹1,500 (Netflix + Spotify + ChatGPT Plus + iCloud + Hotstar)",
+  },
+  {
+    key: "education",
+    label: "Courses / education",
+    hint: "Online courses + certifications + books + kids' school fees.",
+    doubt: "Annual school fees ÷ 12. One-time courses ÷ 12 if taken in last year. Skip if zero.",
+    example: "₹4,000 if kid's school is ₹48k/year",
+  },
+  {
+    key: "familySupport",
+    label: "Family support",
+    hint: "Money sent to parents / siblings / dependents.",
+    doubt: "Be honest — this is real and substantial for many Indians. Helps the calculator reflect your actual cash flow.",
+    example: "₹10,000 sent home monthly",
+  },
+  {
+    key: "other",
+    label: "Other / discretionary",
+    hint: "Catch-all: shopping, gifts, donations, hobbies, vacations averaged.",
+    doubt: "Annual vacations ÷ 12. Festival/wedding spending ÷ 12. Don't leave it at 0 unless you're truly minimalist.",
+    example: "₹3,000 averaged across the year",
+  },
 ];
 
 export function ExpensesForm() {
@@ -31,17 +105,24 @@ export function ExpensesForm() {
 
   return (
     <div>
-      <p className="mb-4 text-sm text-muted-foreground">
-        Monthly spend by category. Be honest — averaging eating-out spend
-        upward by ₹1k each month is the #1 reason this calculator lies.
+      <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        Monthly spend by category. Open your last 3 months of bank/UPI statements
+        and average — most people <span className="font-semibold text-foreground">underestimate by 20-30%</span>.
+        That gap is what kills financial plans.
       </p>
 
-      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide" style={{ color: "var(--color-warikoo-blue)" }}>
-        Essentials (Needs)
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-accent">
+        Essentials — Needs
       </h3>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {ESSENTIALS.map(({ key, label }) => (
-          <Field key={key} label={label}>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {ESSENTIALS.map(({ key, label, hint, doubt, example }) => (
+          <Field
+            key={key}
+            label={label}
+            hint={hint}
+            doubt={doubt}
+            example={example}
+          >
             <CurrencyInput
               value={expenses[key]}
               onChange={(v) => update({ [key]: v } as Partial<Expenses>)}
@@ -50,14 +131,20 @@ export function ExpensesForm() {
         ))}
       </div>
 
-      <Separator className="my-6" />
+      <Separator className="my-8" />
 
-      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide" style={{ color: "var(--color-warikoo-blue)" }}>
-        Lifestyle (Wants)
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-accent">
+        Lifestyle — Wants
       </h3>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {LIFESTYLE.map(({ key, label }) => (
-          <Field key={key} label={label}>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        {LIFESTYLE.map(({ key, label, hint, doubt, example }) => (
+          <Field
+            key={key}
+            label={label}
+            hint={hint}
+            doubt={doubt}
+            example={example}
+          >
             <CurrencyInput
               value={expenses[key]}
               onChange={(v) => update({ [key]: v } as Partial<Expenses>)}

@@ -6,27 +6,53 @@ import { cn } from "@/lib/utils";
 
 /**
  * Vertical label + control wrapper used across all form sections.
+ *
+ * UX contract: every input should anticipate the user's doubt BEFORE they
+ * type. `hint` = one-line clarification. `doubt` = "what counts / what
+ * doesn't" answer. `example` = concrete sample value.
  */
 export function Field({
   label,
   hint,
+  doubt,
+  example,
   htmlFor,
   className,
   children,
 }: {
   label: string;
   hint?: string;
+  doubt?: string;
+  example?: string;
   htmlFor?: string;
   className?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className={cn("flex flex-col gap-1.5", className)}>
-      <Label htmlFor={htmlFor} className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+      <Label
+        htmlFor={htmlFor}
+        className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground"
+      >
         {label}
       </Label>
       {children}
-      {hint && <span className="text-xs text-muted-foreground">{hint}</span>}
+      {(hint || doubt || example) && (
+        <div className="flex flex-col gap-0.5 text-xs leading-snug text-muted-foreground">
+          {hint && <span>{hint}</span>}
+          {doubt && (
+            <span className="text-foreground/70">
+              <span className="font-semibold">↳ </span>
+              {doubt}
+            </span>
+          )}
+          {example && (
+            <span className="font-mono text-[11px] tracking-tight opacity-70">
+              e.g. {example}
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -46,20 +72,19 @@ export function TotalRow({
   return (
     <div
       className={cn(
-        "mt-4 flex items-center justify-between rounded-lg border px-4 py-3",
-        accent ? "border-warikoo-blue/30 bg-warikoo-blue/5" : "bg-muted/40",
+        "mt-4 flex items-center justify-between border px-4 py-3",
+        accent ? "border-foreground/40 bg-secondary" : "bg-muted/40",
       )}
-      style={
-        accent
-          ? {
-              borderColor: "color-mix(in oklab, var(--color-warikoo-blue) 30%, transparent)",
-              backgroundColor: "color-mix(in oklab, var(--color-warikoo-blue) 5%, transparent)",
-            }
-          : undefined
-      }
     >
-      <span className="text-sm font-medium">{label}</span>
-      <span className="text-lg font-semibold tabular-nums" style={{ color: "var(--color-warikoo-blue)" }}>
+      <span className="text-sm font-medium uppercase tracking-wide">
+        {label}
+      </span>
+      <span
+        className={cn(
+          "tabular-nums font-display text-2xl font-semibold",
+          accent ? "text-accent" : "text-foreground",
+        )}
+      >
         ₹ {new Intl.NumberFormat("en-IN").format(Math.round(value))}
       </span>
     </div>
