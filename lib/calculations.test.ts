@@ -555,7 +555,7 @@ describe("calculateGoalFeasibility", () => {
       goals: [
         {
           id: "ktm",
-          name: "KTM 390",
+          name: "Premium Bike",
           currentCost: 350000,
           inflationPercent: 6,
           targetYear: new Date().getFullYear() + 3,

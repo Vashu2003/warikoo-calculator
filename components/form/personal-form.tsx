@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Field } from "@/components/shared/field";
+import { TaxBracketHelp } from "@/components/form/tax-bracket-help";
 import type { TaxRegime } from "@/lib/types";
 
 const TAX_BRACKETS = [0, 5, 10, 15, 20, 30] as const;
@@ -28,7 +29,7 @@ export function PersonalForm() {
       >
         <Input
           id="p-name"
-          placeholder="e.g. Aman Sharma"
+          placeholder="Your first name"
           value={personal.name}
           onChange={(e) => update({ name: e.target.value })}
         />
@@ -96,8 +97,9 @@ export function PersonalForm() {
       <Field
         label="Marginal tax bracket"
         hint="Your highest tax slab. Drives 80E benefit calc for education loans."
-        doubt="Old regime: 0/5/20/30%. New regime: 0/5/10/15/20/30%. Pick the rate on your TOP rupee of income, not your average rate."
-        example="20% if your annual taxable is ₹10-15L"
+        doubt="Pick the rate on your TOP rupee of income, not your average rate. Click 'How to check' for the FY 2025-26 slab tables."
+        example="20% if annual taxable is ₹16-20L (New regime)"
+        help={<TaxBracketHelp />}
         className="md:col-span-2"
       >
         <Select

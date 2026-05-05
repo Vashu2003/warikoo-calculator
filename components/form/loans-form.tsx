@@ -89,11 +89,11 @@ export function LoansForm() {
               <Field
                 label="Loan name"
                 hint="A label only you need to recognize."
-                doubt="Use the bank + type. Helps when you have multiple."
-                example="ICICI Edu, HDFC Home, SBI Car"
+                doubt="Use the bank name + type. Helps when you have multiple loans."
+                example="Edu Loan, Home Loan, Car Loan"
               >
                 <Input
-                  placeholder="ICICI Education Loan"
+                  placeholder="Education Loan"
                   value={loan.name}
                   onChange={(e) => updateLoan(loan.id, { name: e.target.value })}
                 />
@@ -140,7 +140,7 @@ export function LoansForm() {
                 label={`Interest rate — ${loan.ratePercent.toFixed(2)}%`}
                 hint="Annual interest rate (per year, not per month)."
                 doubt="Floating rates change every reset. Use the CURRENT rate on your most recent EMI receipt. Find it on the bank app under loan details."
-                example="11.9% for ICICI edu loans, 8.5% for SBI home loans"
+                example="~11-12% for education loans, ~8-9% for home loans"
               >
                 <input
                   type="range"

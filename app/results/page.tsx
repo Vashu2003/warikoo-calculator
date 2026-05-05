@@ -2,14 +2,14 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Download, Edit3, Calculator, Loader2, Share2 } from "lucide-react";
+import { ArrowLeft, Download, Edit3, Calculator, Share2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { useFinancialStore } from "@/lib/store";
 import { calculateAll } from "@/lib/calculations";
-import { exportResultsToPdf } from "@/lib/pdf-export";
 
 import { HealthScoreCard } from "@/components/results/health-score-card";
 import { PillarsGrid } from "@/components/results/pillars-grid";
@@ -34,8 +34,7 @@ function SectionHeading({ children, id }: { children: React.ReactNode; id?: stri
 
 export default function ResultsPage() {
   const data = useFinancialStore((s) => s.data);
-  const reportRef = React.useRef<HTMLDivElement>(null);
-  const [exporting, setExporting] = React.useState(false);
+  const router = useRouter();
 
   // Detect "no data" state — empty calculator
   const hasNoData =
@@ -47,20 +46,9 @@ export default function ResultsPage() {
 
   const output = React.useMemo(() => calculateAll(data), [data]);
 
-  const handleExportPdf = React.useCallback(async () => {
-    if (!reportRef.current || exporting) return;
-    setExporting(true);
-    const t = toast.loading("Generating your PDF report...");
-    try {
-      await exportResultsToPdf(reportRef.current, "warikoo-health-report.pdf");
-      toast.success("Report downloaded.", { id: t });
-    } catch (err) {
-      console.error(err);
-      toast.error("Could not export. Try again.", { id: t });
-    } finally {
-      setExporting(false);
-    }
-  }, [exporting]);
+  const handleExportPdf = React.useCallback(() => {
+    router.push("/report?print=1");
+  }, [router]);
 
   const handleShare = React.useCallback(async () => {
     const url = window.location.href;
@@ -135,28 +123,16 @@ export default function ResultsPage() {
               <Share2 className="h-4 w-4" />
               <span className="ml-1 hidden md:inline">Share</span>
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleExportPdf}
-              disabled={exporting}
-            >
-              {exporting ? (
-                <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-              ) : (
-                <Download className="mr-1 h-4 w-4" />
-              )}
-              <span className="hidden sm:inline">{exporting ? "Exporting..." : "PDF"}</span>
+            <Button variant="outline" size="sm" onClick={handleExportPdf}>
+              <Download className="mr-1 h-4 w-4" />
+              <span className="hidden sm:inline">PDF</span>
             </Button>
             <ThemeToggle />
           </div>
         </div>
       </div>
 
-      <div
-        ref={reportRef}
-        className="mx-auto w-full max-w-5xl flex-1 space-y-10 px-4 py-6 md:px-6 md:py-8"
-      >
+      <div className="mx-auto w-full max-w-5xl flex-1 space-y-10 px-4 py-6 md:px-6 md:py-8">
         {/* Health Score */}
         <section>
           <HealthScoreCard score={output.healthScore} />
@@ -222,18 +198,13 @@ export default function ResultsPage() {
               </Link>
               <Button
                 onClick={handleExportPdf}
-                disabled={exporting}
                 style={{
                   backgroundColor: "var(--color-warikoo-blue)",
                   color: "white",
                 }}
               >
-                {exporting ? (
-                  <Loader2 className="mr-1 h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="mr-1 h-4 w-4" />
-                )}
-                {exporting ? "Exporting..." : "Export PDF"}
+                <Download className="mr-1 h-4 w-4" />
+                Export PDF
               </Button>
             </div>
           </CardContent>

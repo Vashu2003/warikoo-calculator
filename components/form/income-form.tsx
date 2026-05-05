@@ -34,7 +34,7 @@ export function IncomeForm() {
         <Field
           label="Side income / freelance"
           hint="Monthly average over last 6 months."
-          doubt="Include: consulting, freelance projects, YouTube/Insta payouts, weekend gigs. Skip if it's truly one-off."
+          doubt="Include: consulting, freelance projects, content/creator payouts, weekend gigs. Skip if it's truly one-off."
           example="₹15,000 if you average that across the year"
         >
           <CurrencyInput

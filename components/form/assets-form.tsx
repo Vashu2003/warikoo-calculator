@@ -43,14 +43,14 @@ const INVESTMENTS: AssetFieldDef[] = [
     key: "mutualFunds",
     label: "Mutual Funds — current NAV value",
     hint: "Total current value across all your MF folios.",
-    doubt: "Open Coin / Groww / Kuvera / MF Central. Sum of current values, NOT the amount invested. If you have ₹2L invested but it's grown to ₹3.5L → put ₹3,50,000.",
+    doubt: "Open your investment app or MF Central. Sum of current values, NOT the amount invested. If you have ₹2L invested but it's grown to ₹3.5L → put ₹3,50,000.",
     example: "₹3,50,000 across Index + Mid Cap + Small Cap",
   },
   {
     key: "stocks",
     label: "Direct stocks",
     hint: "Current portfolio value, NOT what you bought at.",
-    doubt: "Open Zerodha / Upstox / Groww. Use the live portfolio value. Skip if you don't directly own stocks (MFs are separate).",
+    doubt: "Open your stock broker app. Use the live portfolio value. Skip if you don't directly own stocks (MFs are separate).",
     example: "₹80,000 current value of your direct equity",
   },
   {

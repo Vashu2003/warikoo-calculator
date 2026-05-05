@@ -101,7 +101,7 @@ export function InsuranceForm() {
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
           If your policy has a maturity value, surrender value, or &ldquo;money-back&rdquo;
           benefits — it&apos;s endowment, not term. Returns are typically 4-6%.
-          A pure term plan + Nifty index fund beats it by ~7%/year. Don&apos;t enter
+          A pure term plan + index fund beats it by ~7%/year. Don&apos;t enter
           endowment cover here — it&apos;s an investment line, not insurance.
         </p>
       </div>

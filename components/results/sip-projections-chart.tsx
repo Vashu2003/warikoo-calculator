@@ -121,7 +121,46 @@ export function SipProjectionsChart({
           </div>
         </div>
 
-        <div className="h-[280px] w-full">
+        {/* Static fallback table — only shown during PDF capture */}
+        <div data-pdf-only style={{ display: "none" }}>
+          <table className="w-full border-collapse text-sm">
+            <thead>
+              <tr className="border-b border-foreground/20">
+                <th className="py-2 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Year
+                </th>
+                <th className="py-2 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Invested
+                </th>
+                <th className="py-2 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Projected corpus
+                </th>
+                <th className="py-2 text-right text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Wealth created
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {projections.map((p) => (
+                <tr key={p.year} className="border-b border-foreground/10">
+                  <td className="py-2 font-mono">{p.year}y</td>
+                  <td className="py-2 text-right tabular-nums">
+                    {formatINR(p.invested)}
+                  </td>
+                  <td className="py-2 text-right font-semibold tabular-nums">
+                    {formatINR(p.projectedValue)}
+                  </td>
+                  <td className="py-2 text-right tabular-nums text-[var(--color-pillar-green)]">
+                    {formatINR(p.projectedValue - p.invested)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Live interactive chart — hidden during PDF capture */}
+        <div data-pdf-skip className="h-[280px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={projections} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
               <defs>

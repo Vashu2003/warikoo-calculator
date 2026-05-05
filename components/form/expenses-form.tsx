@@ -26,7 +26,7 @@ const ESSENTIALS: ExpenseFieldDef[] = [
     key: "groceries",
     label: "Groceries & household",
     hint: "Food, cleaning supplies, daily essentials.",
-    doubt: "Includes: BigBasket, Zepto, kirana store, monthly Amazon for daily-use stuff. Excludes: eating out.",
+    doubt: "Includes: monthly grocery delivery apps + kirana store + e-commerce orders for daily-use items. Excludes: eating out.",
     example: "₹8,000 for a couple",
   },
   {
@@ -40,15 +40,15 @@ const ESSENTIALS: ExpenseFieldDef[] = [
     key: "mobile",
     label: "Mobile & internet",
     hint: "Postpaid + home wifi + OTT bundle prepaid recharges.",
-    doubt: "Subscriptions like Netflix go in 'Subscriptions' below. Just connectivity here.",
-    example: "₹1,200 (Jio postpaid ₹400 + ACT wifi ₹800)",
+    doubt: "Streaming subscriptions go in 'Subscriptions' below. Just connectivity here.",
+    example: "₹1,200 (postpaid mobile ₹400 + home wifi ₹800)",
   },
   {
     key: "transport",
     label: "Transport / commute",
-    hint: "Petrol + Uber/Ola + metro + monthly passes averaged.",
+    hint: "Petrol + cab apps + metro + monthly passes averaged.",
     doubt: "Vacation flights/trains go in Other. Daily/weekly commute only here.",
-    example: "₹4,000 (petrol ₹3k + Uber ₹1k)",
+    example: "₹4,000 (petrol ₹3k + cabs ₹1k)",
   },
   {
     key: "healthcare",
@@ -63,16 +63,16 @@ const LIFESTYLE: ExpenseFieldDef[] = [
   {
     key: "eatingOut",
     label: "Eating out & food delivery",
-    hint: "Restaurants + Swiggy + Zomato + Starbucks + bar bills.",
+    hint: "Restaurants + food-delivery apps + cafes + bar bills.",
     doubt: "This is THE leak everyone underestimates. Open your last 3 months of UPI history if unsure.",
     example: "₹5,000 if you order in 2x/week + restaurant 2x/month",
   },
   {
     key: "subscriptions",
     label: "Subscriptions",
-    hint: "Netflix + Spotify + Notion + ChatGPT + iCloud + gym + apps.",
+    hint: "OTT + music + cloud storage + productivity apps + gym + paid apps.",
     doubt: "Add ALL of them. The £/$ ones convert at current rate. Annual subs ÷ 12.",
-    example: "₹1,500 (Netflix + Spotify + ChatGPT Plus + iCloud + Hotstar)",
+    example: "₹1,500 across video + music + AI + cloud + sports streaming",
   },
   {
     key: "education",

@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "How accurate are the projections?",
-    a: "We use 12% CAGR for equity SIPs (historical Nifty 50 average), 8% for short-term safe instruments, and 10% annual SIP step-up. These match Warikoo's defaults from his Money Matters series. Real returns vary — markets aren't smooth.",
+    a: "We use 12% CAGR for equity SIPs (long-run Indian large-cap average), 8% for short-term safe instruments, and 10% annual SIP step-up. These match Warikoo's defaults. Real returns vary — markets aren't smooth.",
   },
   {
     q: "Is this really free? What's the catch?",

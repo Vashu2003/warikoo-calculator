@@ -21,7 +21,13 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { ArrowLeft, ArrowRight, Sparkles, RotateCcw } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Sparkles,
+  RotateCcw,
+  Calculator as CalculatorIcon,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { useFinancialStore } from "@/lib/store";
@@ -46,16 +52,57 @@ const sections = [
   { id: "goals", label: "Goals", Component: GoalsForm },
 ] as const;
 
+type SectionId = (typeof sections)[number]["id"];
+
 export default function CalculatorPage() {
   const router = useRouter();
   const reset = useFinancialStore((s) => s.reset);
+  const data = useFinancialStore((s) => s.data);
+
+  const [activeTab, setActiveTab] = React.useState<SectionId>("personal");
+
+  const ids = sections.map((s) => s.id);
+  const currentIdx = ids.indexOf(activeTab);
+  const isLast = currentIdx === sections.length - 1;
+  const isFirst = currentIdx === 0;
+  const nextSection = !isLast ? sections[currentIdx + 1] : null;
+  const prevSection = !isFirst ? sections[currentIdx - 1] : null;
+
+  const totalIncome =
+    data.income.salary + data.income.sideIncome + data.income.otherIncome;
+  const hasMinimumData = totalIncome > 0;
 
   const handleDemo = () => {
     useFinancialStore.setState({ data: demoFinancialData });
     toast.success("Demo data loaded — switch tabs to see all sections.");
   };
 
+  const goNext = () => {
+    if (nextSection) {
+      setActiveTab(nextSection.id);
+      // scroll to top of form for clarity
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const goPrev = () => {
+    if (prevSection) {
+      setActiveTab(prevSection.id);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const handleCalculate = () => {
+    if (!hasMinimumData) {
+      toast.error("Add your income first — at least a salary number.", {
+        description: "Calculator needs income to compute anything meaningful.",
+        action: {
+          label: "Go to Income",
+          onClick: () => setActiveTab("income"),
+        },
+      });
+      return;
+    }
     const t = toast.loading("Crunching your numbers...");
     setTimeout(() => {
       toast.success("Done.", { id: t });
@@ -106,6 +153,7 @@ export default function CalculatorPage() {
                         variant="destructive"
                         onClick={() => {
                           reset();
+                          setActiveTab("personal");
                           toast.success("All data cleared.");
                         }}
                       >
@@ -122,10 +170,35 @@ export default function CalculatorPage() {
       </div>
 
       <div className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 md:px-6 md:py-8">
-        <Tabs defaultValue="personal" className="w-full">
+        {/* Step indicator */}
+        <div className="mb-4 flex items-center justify-between text-xs">
+          <span className="font-mono uppercase tracking-[0.12em] text-muted-foreground">
+            Step {String(currentIdx + 1).padStart(2, "0")} of{" "}
+            {String(sections.length).padStart(2, "0")} ·{" "}
+            <span className="text-foreground">
+              {sections[currentIdx].label}
+            </span>
+          </span>
+          <span className="hidden font-mono uppercase tracking-[0.12em] text-muted-foreground sm:inline">
+            Click any tab to jump
+          </span>
+        </div>
+
+        <Tabs
+          value={activeTab}
+          onValueChange={(v) => setActiveTab(v as SectionId)}
+          className="w-full"
+        >
           <TabsList className="mb-6 flex h-auto w-full flex-wrap justify-start gap-1 bg-muted/40 p-1">
-            {sections.map((s) => (
-              <TabsTrigger key={s.id} value={s.id} className="flex-1 min-w-[80px]">
+            {sections.map((s, i) => (
+              <TabsTrigger
+                key={s.id}
+                value={s.id}
+                className="flex-1 min-w-[80px] gap-1.5"
+              >
+                <span className="font-mono text-[10px] opacity-50">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 {s.label}
               </TabsTrigger>
             ))}
@@ -133,9 +206,11 @@ export default function CalculatorPage() {
 
           {sections.map(({ id, label, Component }) => (
             <TabsContent key={id} value={id}>
-              <Card>
+              <Card className="border-foreground/15 shadow-none">
                 <CardHeader>
-                  <CardTitle>{label}</CardTitle>
+                  <CardTitle className="font-display text-2xl tracking-tight">
+                    {label}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Component />
@@ -145,21 +220,52 @@ export default function CalculatorPage() {
           ))}
         </Tabs>
 
-        <div className="mt-8 flex justify-end">
+        {/* Footer nav: Previous · (gap) · Next or Calculate */}
+        <div className="mt-8 flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Button
+            variant="outline"
             size="lg"
-            onClick={handleCalculate}
-            className="shadow-lg"
-            style={{
-              backgroundColor: "var(--color-warikoo-blue)",
-              color: "white",
-              boxShadow: "0 10px 25px -5px rgba(31, 78, 120, 0.25)",
-            }}
+            onClick={goPrev}
+            disabled={isFirst}
+            className="border-foreground/30"
           >
-            Calculate
-            <ArrowRight className="ml-1 h-4 w-4" />
+            <ArrowLeft className="mr-1 h-4 w-4" />
+            {prevSection ? `Back to ${prevSection.label}` : "Back"}
           </Button>
+
+          {!isLast ? (
+            <Button
+              size="lg"
+              onClick={goNext}
+              className="bg-foreground text-background hover:bg-foreground/90"
+            >
+              Next: {nextSection?.label}
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          ) : (
+            <Button
+              size="lg"
+              onClick={handleCalculate}
+              disabled={!hasMinimumData}
+              className="bg-accent text-accent-foreground hover:bg-accent/90 disabled:opacity-50"
+              title={
+                hasMinimumData
+                  ? "Run my Warikoo Health Score"
+                  : "Add your income on the Income tab first"
+              }
+            >
+              <CalculatorIcon className="mr-1.5 h-4 w-4" />
+              Run my numbers
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          )}
         </div>
+
+        {!hasMinimumData && isLast && (
+          <p className="mt-3 text-right text-xs text-accent">
+            ↳ Add at least your salary in the Income tab to enable Calculate.
+          </p>
+        )}
       </div>
     </main>
   );

@@ -104,8 +104,8 @@ export function GoalsForm() {
                   <Field
                     label="Goal name"
                     hint="Be specific — concrete goals get funded more often than vague ones."
-                    doubt="‘Trip to Japan in summer’ beats ‘Vacation’. ‘House down payment in Bangalore’ beats ‘House’."
-                    example="Home down payment, Mom's surgery fund, KTM 390"
+                    doubt="‘Trip to Japan in summer’ beats ‘Vacation’. ‘House down payment in your city’ beats ‘House’."
+                    example="Home down payment, parents' medical fund, premium bike"
                     className="md:col-span-2"
                   >
                     <Input
@@ -119,7 +119,7 @@ export function GoalsForm() {
                     label="Cost today"
                     hint="What this would cost RIGHT NOW. Don't try to inflate it yourself."
                     doubt="Today's price tag, today's quote. The calculator will inflate it forward — don't do it twice."
-                    example="₹40L for a Bangalore home down payment today"
+                    example="₹40L for a tier-1 city home down payment today"
                   >
                     <CurrencyInput
                       value={goal.currentCost}

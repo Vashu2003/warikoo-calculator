@@ -1,13 +1,13 @@
 /**
  * Demo data — realistic Indian middle-class scenario for the "Try Demo" button.
- * Pre-fills calculator with a 25-year-old IT professional in Bangalore.
+ * Pre-fills calculator with a 25-year-old salaried professional.
  */
 
 import type { FinancialData } from "./types";
 
 export const demoFinancialData: FinancialData = {
   personal: {
-    name: "Aman Sharma",
+    name: "Demo Profile",
     age: 25,
     dependents: 0,
     taxRegime: "New",
@@ -34,7 +34,7 @@ export const demoFinancialData: FinancialData = {
   loans: [
     {
       id: "demo-loan-1",
-      name: "Education Loan (ICICI)",
+      name: "Education Loan",
       type: "Edu",
       principal: 250000,
       ratePercent: 11.5,
@@ -59,7 +59,7 @@ export const demoFinancialData: FinancialData = {
   goals: [
     {
       id: "demo-goal-1",
-      name: "KTM 390 (Cash buy)",
+      name: "Premium bike (cash buy)",
       currentCost: 350000,
       inflationPercent: 6,
       targetYear: new Date().getFullYear() + 3,
@@ -91,7 +91,7 @@ export const demoFinancialData: FinancialData = {
 
 export const goalTemplates = [
   {
-    name: "KTM 390 / Premium Bike",
+    name: "Premium Bike",
     currentCost: 350000,
     inflationPercent: 6,
     yearsFromNow: 3,
